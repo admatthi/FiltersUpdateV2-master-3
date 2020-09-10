@@ -1,0 +1,6 @@
+framework module Pods_CleanseUITests {
+  umbrella header "Pods-CleanseUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
