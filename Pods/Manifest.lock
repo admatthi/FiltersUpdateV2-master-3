@@ -145,7 +145,9 @@ DEPENDENCIES:
   - Purchases
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
+    - Alamofire
+    - AlamofireImage
     - AppsFlyerFramework
     - FBSDKCoreKit
     - Firebase
@@ -173,9 +175,6 @@ SPEC REPOS:
     - PromisesObjC
     - Protobuf
     - Purchases
-  trunk:
-    - Alamofire
-    - AlamofireImage
 
 SPEC CHECKSUMS:
   Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
@@ -208,6 +207,6 @@ SPEC CHECKSUMS:
   Protobuf: 176220c526ad8bd09ab1fb40a978eac3fef665f7
   Purchases: 15bb10a16e825ea724aeab107d98036fa168a670
 
-PODFILE CHECKSUM: 7ca08a2445c5278888a4404e2544bd8c3d48c5d4
+PODFILE CHECKSUM: 4f030c0ae2e972a879da4782ad6472cf4cc06cdc
 
 COCOAPODS: 1.9.3

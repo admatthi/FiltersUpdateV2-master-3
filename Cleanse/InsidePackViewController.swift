@@ -20,6 +20,34 @@ import AlamofireImage
 
 class InsidePackViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    @IBOutlet weak var taphow: UIButton!
+    
+    @IBAction func tapHOw(_ sender: Any) {
+        
+        self.performSegue(withIdentifier: "InsideToHow", sender: self)
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        textone = ""
+        texttwo = ""
+        textthree = ""
+        
+        if didpurchase {
+            
+            taphow.alpha = 1
+            
+        } else {
+            
+            taphow.alpha = 0
+        }
+        
+        MBProgressHUD.hide(for: view, animated: true)
+        
+        
+    }
+    
     var books: [Book] = [] {
         didSet {
             
@@ -45,6 +73,9 @@ class InsidePackViewController: UIViewController, UICollectionViewDelegate, UICo
         packName.text = selectedgenre
         
         ref = Database.database().reference()
+        
+        let loadingNotification = MBProgressHUD.showAdded(to: view, animated: true)
+
 
         var screenSize = titleCollectionView.bounds
         var screenWidth = screenSize.width
@@ -57,6 +88,11 @@ class InsidePackViewController: UIViewController, UICollectionViewDelegate, UICo
         layout.minimumLineSpacing = 0
         
         titleCollectionView!.collectionViewLayout = layout
+        
+        referrer = selectedbookid
+        
+        referrer = "InsidePack"
+
         
         queryforids { () -> Void in
                    
@@ -211,7 +247,6 @@ class InsidePackViewController: UIViewController, UICollectionViewDelegate, UICo
 
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             
-            refer = "On Tap Discover"
             
             let generator = UIImpactFeedbackGenerator(style: .heavy)
             generator.impactOccurred()
@@ -219,13 +254,13 @@ class InsidePackViewController: UIViewController, UICollectionViewDelegate, UICo
             titleCollectionView.isUserInteractionEnabled = true
             
 
+            logUsePressed(referrer: referrer)
                 
                 let book = self.book(atIndexPath: indexPath)
                 
                 //print("CELL ITEM===>", book ?? [])
                 
                 let loadingNotification = MBProgressHUD.showAdded(to: view, animated: true)
-                referrer = "Discover"
 
                 
                 headlines.removeAll()
@@ -285,12 +320,7 @@ class InsidePackViewController: UIViewController, UICollectionViewDelegate, UICo
                 
             }
     
-    override func viewDidAppear(_ animated: Bool) {
-        
-        MBProgressHUD.hide(for: view, animated: true)
 
-    }
-            
             
                 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -343,8 +373,13 @@ class InsidePackViewController: UIViewController, UICollectionViewDelegate, UICo
                     
                     if let imageURLString = book?.imageURL, let imageUrl = URL(string: imageURLString) {
                               
+                        
+                        let image = UIImage(named: "Artboard-1")
+                        cell.titleImage.kf.setImage(with: imageUrl, placeholder: image)
+
+
                               //cell.titleImage.kf.setImage(with: imageUrl)
-                        cell.titleImage.af.setImage(withURL: imageUrl)
+//                        cell.titleImage.kf.setImage(with: imageUrl)
 
                               MBProgressHUD.hide(for: view, animated: true)
 
@@ -382,7 +417,7 @@ class InsidePackViewController: UIViewController, UICollectionViewDelegate, UICo
 //                        ref?.child("fb-ads-filter").child(selectedgenre).child(book!.bookID).updateChildValues(["Views" : "\(randomInt)k"])
 
                         
-        //                cell.viewslabel.text = "1.3M"
+                        cell.viewslabel.text = "1.3M"
                         
                     }
                     
@@ -428,6 +463,10 @@ class InsidePackViewController: UIViewController, UICollectionViewDelegate, UICo
              
          }
          
+     }
+    
+    func logUsePressed(referrer : String) {
+         AppEvents.logEvent(AppEvents.Name(rawValue: "use pressed"), parameters: ["referrer" : referrer, "bookID" : selectedbookid, "genre" : selectedgenre])
      }
     /*
     // MARK: - Navigation

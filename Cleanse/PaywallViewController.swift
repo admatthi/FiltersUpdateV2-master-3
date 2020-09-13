@@ -15,8 +15,6 @@ import AppsFlyerLib
 
 var refer = String()
 
-var onboarding = Bool()
-
 
 @objc protocol SwiftPaywallDelegate {
     func purchaseCompleted(paywall: PaywallViewController, transaction: SKPaymentTransaction, purchaserInfo: Purchases.PurchaserInfo)
@@ -73,8 +71,17 @@ var delegate : SwiftPaywallDelegate?
         
   
         referrer = "Paywall"
+        
+        if onboarding {
+            
+            self.performSegue(withIdentifier: "PaywallToHome", sender: self)
+            
+        } else {
             
             self.dismiss(animated: true, completion: nil)
+
+        }
+            
 
         
         
@@ -96,7 +103,6 @@ var delegate : SwiftPaywallDelegate?
     
     @IBAction func tapContinue(_ sender: Any) {
         
-        referrer = "Paywall"
         
         logTapSubscribeEvent(referrer : referrer)
         
@@ -151,7 +157,8 @@ var delegate : SwiftPaywallDelegate?
                         MBProgressHUD.hide(for: self.view, animated: true)
 
                         
-                        
+                        referrer = "Paywall"
+
                                    self.dismiss(animated: true, completion: nil)
 
                                
@@ -171,7 +178,8 @@ var delegate : SwiftPaywallDelegate?
                           ]);
                           didpurchase = true
                         
-                                   
+                                   referrer = "Paywall"
+
                                    self.dismiss(animated: true, completion: nil)
 
                                
@@ -199,9 +207,9 @@ var delegate : SwiftPaywallDelegate?
         
         ref = Database.database().reference()
         
-        tapcontinue.layer.cornerRadius = 25.0
-        
-        tapcontinue.clipsToBounds = true
+//        tapcontinue.layer.cornerRadius = 25.0
+//
+//        tapcontinue.clipsToBounds = true
         
         logPaywallShownEvent(referrer : referrer)
         
@@ -212,6 +220,30 @@ var delegate : SwiftPaywallDelegate?
 
                                       backimage.addSubview(blurEffectView)
         
+            if slimeybool {
+
+        //                slimeybool = true
+        //
+
+                        self.toptext.text = "3 Day FREE Trial"
+                        self.termstext.alpha = 0
+                                self.disclaimertext.alpha = 0
+                                 self.tapcontinue.setTitle("Try for FREE!", for: .normal)
+                        
+                    } else {
+        //
+        //                slimeybool = false
+                        self.leadingtext.text = "$69.99/year"
+                        
+                        self.toptext.text = "World Class Presets"
+        //
+                        self.termstext.alpha = 1
+                          self.disclaimertext.alpha = 1
+                          self.tapcontinue.setTitle("Continue", for: .normal)
+                        self.tapcontinue.setTitle("Continue", for: .normal)
+                        
+
+                    }
         
         queryforpaywall()
         
@@ -244,7 +276,7 @@ var delegate : SwiftPaywallDelegate?
             
             if let slimey = value?["Slimey"] as? String {
 
-//                slimeybool = true
+                slimeybool = true
 //
                 self.leadingtext.text = slimey
 
@@ -255,7 +287,7 @@ var delegate : SwiftPaywallDelegate?
                 
             } else {
 //
-//                slimeybool = false
+                slimeybool = false
                 self.leadingtext.text = "$69.99/year"
                 
                 self.toptext.text = "World Class Presets"
@@ -264,7 +296,7 @@ var delegate : SwiftPaywallDelegate?
                   self.disclaimertext.alpha = 1
                   self.tapcontinue.setTitle("Continue", for: .normal)
                 self.tapcontinue.setTitle("Continue", for: .normal)
-                
+//
 
             }
             

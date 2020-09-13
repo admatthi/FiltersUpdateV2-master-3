@@ -13,6 +13,8 @@ import FirebaseDatabase
 import Kingfisher
 import Photos
 import MBProgressHUD
+import Alamofire
+import AlamofireImage
 
 class FTodayViewController: UIViewController,  UICollectionViewDataSource, UICollectionViewDelegate {
     
@@ -431,7 +433,8 @@ class FTodayViewController: UIViewController,  UICollectionViewDataSource, UICol
                 DispatchQueue.main.async {
                     assetObj = fetchResults
                     print("Loaded \(fetchResults.count) images.")
-                    
+                    MBProgressHUD.hide(for: self.view, animated: true)
+
                     if(assetObj != nil){
                         
                         let temporaryDNGFileURL = URL(fileURLWithPath: filePath)
@@ -972,8 +975,9 @@ class FTodayViewController: UIViewController,  UICollectionViewDataSource, UICol
                       
                       if let imageURLString = book?.imageURL, let imageUrl = URL(string: imageURLString) {
                           
-                          cell.titleImage.kf.setImage(with: imageUrl)
-                          
+                              let image = UIImage(named: "Artboard-1")
+                                       cell.titleImage.kf.setImage(with: imageUrl, placeholder: image)
+
                           
                           
                           cell.titleImage.layer.cornerRadius = 10.0
@@ -990,7 +994,10 @@ class FTodayViewController: UIViewController,  UICollectionViewDataSource, UICol
                           //                    cell.titleback.addSubview(blurEffectView)
                           
                           
-                      }
+                      } else {
+                        
+//                        cell.titleImage.image = UIImage(named: "")
+            }
                       
                       let isWished = Bool()
                       

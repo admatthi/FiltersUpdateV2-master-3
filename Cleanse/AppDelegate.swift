@@ -19,6 +19,8 @@ var entereddiscount = String()
 
 var actualdiscount = String()
 
+var onboarding = Bool()
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, AppsFlyerTrackerDelegate {
     func onConversionDataSuccess(_ conversionInfo: [AnyHashable : Any]) {
@@ -58,8 +60,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AppsFlyerTrackerDelegate 
         AppsFlyerTracker.shared().appleAppID = "1520062033"
         AppsFlyerTracker.shared().delegate = self
         AppsFlyerTracker.shared().isDebug = true
-
-
+  
+        
          // 2 - Replace 'appsFlyerDevKey', `appleAppID` with your DevKey, Apple App ID
     
         
@@ -76,8 +78,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AppsFlyerTrackerDelegate 
 let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
   
   if launchedBefore {
+
+    onboarding = false
     
+queryforpaywall{ () -> Void in
     
+    }
      let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
      let tabBarBuyer : UITabBarController = mainStoryboardIpad.instantiateViewController(withIdentifier: "HomeTab") as! UITabBarController
       
@@ -87,21 +93,33 @@ let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
            self.window?.makeKeyAndVisible()
     
       tabBarBuyer.selectedIndex = 0
+    
+    
       
   } else {
+    
+  
+    slimeybool = true
+    
+    self.queryforinfo()
+    
+    
     
     
     let storybaord = UIStoryboard(name: "Main", bundle: Bundle.main)
     let authVC = storybaord.instantiateViewController(withIdentifier: "Onboarding")
+    onboarding = true
     
+    self.window?.rootViewController? = authVC
     
-    window?.rootViewController? = authVC
-    
-    window?.makeKeyAndVisible()
+    self.window?.makeKeyAndVisible()
     
     UserDefaults.standard.set(true, forKey: "launchedBefore")
     
-}
+    
+    
+    
+        }
         
             Purchases.debugLogsEnabled = true
           Purchases.configure(withAPIKey: "ryfdDUwKGrQKWbGaaYJjIobqbOruFudh", appUserID: nil)
@@ -113,12 +131,39 @@ let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
           
           uid = UIDevice.current.identifierForVendor?.uuidString ?? "x"
           
-        
-        queryforpaywall()
         return true
     }
     
-    func queryforpaywall() {
+    func queryforinfo() {
+        
+        ref?.child("Users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            let value = snapshot.value as? NSDictionary
+            
+            if let purchased = value?["Purchased"] as? String {
+                
+                if purchased == "True" {
+                    
+                    didpurchase = true
+                    
+                } else {
+                    
+                    didpurchase = false
+                    
+                    
+                }
+                
+            } else {
+                
+                didpurchase = false
+                
+            }
+            
+        })
+        
+    }
+    
+    func queryforpaywall(completed: @escaping (() -> Void) ) {
                 
         ref?.child("Users").observeSingleEvent(of: .value, with: { (snapshot) in
             
@@ -128,10 +173,12 @@ let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
             
             if let slimey = value?["Slimey"] as? String {
 
+                completed()
                 slimeybool = true
                 
             } else {
                 
+                completed()
                 slimeybool = false
 
             }

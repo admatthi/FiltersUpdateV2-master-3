@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5C9AA1A33FFF326B8C8EC5C76298112E"
+               BlueprintIdentifier = "B3E35585386979BD8BD47924C787BDD1"
                BuildableName = "Pods_CleanseUITests.framework"
                BlueprintName = "Pods-CleanseUITests"
                ReferencedContainer = "container:Pods.xcodeproj">

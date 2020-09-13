@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F8120366D890C5234A0C6431B9EF9ACE"
+               BlueprintIdentifier = "B5EB5A41C78E37E99646EE2468E60948"
                BuildableName = "Pods_Cleanse.framework"
                BlueprintName = "Pods-Cleanse"
                ReferencedContainer = "container:Pods.xcodeproj">

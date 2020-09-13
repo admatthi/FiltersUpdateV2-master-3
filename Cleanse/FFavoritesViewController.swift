@@ -13,6 +13,8 @@ import FirebaseDatabase
 import Kingfisher
 import Photos
 import MBProgressHUD
+import Alamofire
+import AlamofireImage
 
 class FFavoritesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
@@ -377,7 +379,8 @@ class FFavoritesViewController: UIViewController, UICollectionViewDataSource, UI
                     DispatchQueue.main.async {
                         assetObj = fetchResults
                         print("Loaded \(fetchResults.count) images.")
-                        
+                        MBProgressHUD.hide(for: self.view, animated: true)
+
                         if(assetObj != nil){
                             
                             let temporaryDNGFileURL = URL(fileURLWithPath: filePath)
@@ -911,8 +914,9 @@ class FFavoritesViewController: UIViewController, UICollectionViewDataSource, UI
                                   
                                   if let imageURLString = book?.imageURL, let imageUrl = URL(string: imageURLString) {
                                       
-                                      cell.titleImage.kf.setImage(with: imageUrl)
-                                      
+                                          let image = UIImage(named: "Artboard-1")
+                                                   cell.titleImage.kf.setImage(with: imageUrl, placeholder: image)
+
                                       
                                       
                                       cell.titleImage.layer.cornerRadius = 10.0

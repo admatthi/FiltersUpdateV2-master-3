@@ -19,6 +19,9 @@ pod 'AppsFlyerFramework'
 pod 'MBProgressHUD'
 pod 'Alamofire'
 pod 'AlamofireImage'
+pod 'Firebase/Crashlytics'
+pod 'Firebase/Analytics'
+
 
   target 'CleanseTests' do
     inherit! :search_paths
