@@ -15,6 +15,18 @@
 		9D0663B02367B3AA00385DEE /* Summary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0663AE2367B3A900385DEE /* Summary.swift */; };
 		9D0663B12367B3AA00385DEE /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0663AB2367B3A900385DEE /* Audio.swift */; };
 		9D0663B22367B3AA00385DEE /* PaywallConfigurationVariant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0663AD2367B3A900385DEE /* PaywallConfigurationVariant.swift */; };
+		9D29091025103B4F00534D1B /* fad1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9D29090F25103B4F00534D1B /* fad1.mp4 */; };
+		9D29091125103B4F00534D1B /* fad1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9D29090F25103B4F00534D1B /* fad1.mp4 */; };
+		9D29091225103B4F00534D1B /* fad1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9D29090F25103B4F00534D1B /* fad1.mp4 */; };
+		9D290914251049FF00534D1B /* lll.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9D290913251049FF00534D1B /* lll.mp4 */; };
+		9D290915251049FF00534D1B /* lll.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9D290913251049FF00534D1B /* lll.mp4 */; };
+		9D290916251049FF00534D1B /* lll.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9D290913251049FF00534D1B /* lll.mp4 */; };
+		9D2909192510695C00534D1B /* ad3.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9D2909182510695C00534D1B /* ad3.mp4 */; };
+		9D29091A2510695C00534D1B /* ad3.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9D2909182510695C00534D1B /* ad3.mp4 */; };
+		9D29091B2510695C00534D1B /* ad3.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9D2909182510695C00534D1B /* ad3.mp4 */; };
+		9D29091D2510699A00534D1B /* myv3.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9D29091C2510699A00534D1B /* myv3.mp4 */; };
+		9D29091E2510699A00534D1B /* myv3.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9D29091C2510699A00534D1B /* myv3.mp4 */; };
+		9D29091F2510699A00534D1B /* myv3.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9D29091C2510699A00534D1B /* myv3.mp4 */; };
 		9D2D42562373360A003E21C1 /* EntriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2D42552373360A003E21C1 /* EntriesViewController.swift */; };
 		9D328D0A23651B26003768CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D328D0923651B26003768CF /* Main.storyboard */; };
 		9D328D0E2365EF72003768CF /* BasisGrotesquePro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9D328D0B2365EF72003768CF /* BasisGrotesquePro-Regular.ttf */; };
@@ -118,6 +130,10 @@
 		9D0663AC2367B3A900385DEE /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
 		9D0663AD2367B3A900385DEE /* PaywallConfigurationVariant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallConfigurationVariant.swift; sourceTree = "<group>"; };
 		9D0663AE2367B3A900385DEE /* Summary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Summary.swift; sourceTree = "<group>"; };
+		9D29090F25103B4F00534D1B /* fad1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = fad1.mp4; path = ../../fad1.mp4; sourceTree = "<group>"; };
+		9D290913251049FF00534D1B /* lll.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = lll.mp4; path = ../../lll.mp4; sourceTree = "<group>"; };
+		9D2909182510695C00534D1B /* ad3.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = ad3.mp4; path = ../../ad3.mp4; sourceTree = "<group>"; };
+		9D29091C2510699A00534D1B /* myv3.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = myv3.mp4; path = ../../myv3.mp4; sourceTree = "<group>"; };
 		9D2D42552373360A003E21C1 /* EntriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesViewController.swift; sourceTree = "<group>"; };
 		9D328D0923651B26003768CF /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		9D328D0B2365EF72003768CF /* BasisGrotesquePro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BasisGrotesquePro-Regular.ttf"; sourceTree = "<group>"; };
@@ -271,6 +287,10 @@
 				9D328D1B2366593C003768CF /* TitleCollectionViewCell.swift */,
 				9D328D1D23665959003768CF /* GenreCollectionViewCell.swift */,
 				9D328D132365F5F0003768CF /* LikesViewController.swift */,
+				9D29091C2510699A00534D1B /* myv3.mp4 */,
+				9D290913251049FF00534D1B /* lll.mp4 */,
+				9D29090F25103B4F00534D1B /* fad1.mp4 */,
+				9D2909182510695C00534D1B /* ad3.mp4 */,
 				9D7360EC236513DE00DC6ACB /* Assets.xcassets */,
 				9D328D15236628E9003768CF /* PaywallViewController.swift */,
 				9D328D1723662923003768CF /* AudioViewController.swift */,
@@ -455,13 +475,17 @@
 				CDC48FFF25093E3300D3FC39 /* GothicA1-Thin.ttf in Resources */,
 				CDC48FF325093E3300D3FC39 /* GothicA1-ExtraLight.ttf in Resources */,
 				CDC48FF625093E3300D3FC39 /* GothicA1-Medium.ttf in Resources */,
+				9D29091025103B4F00534D1B /* fad1.mp4 in Resources */,
+				9D2909192510695C00534D1B /* ad3.mp4 in Resources */,
 				CDC4900225093E3300D3FC39 /* GothicA1-Light.ttf in Resources */,
 				9D328D0E2365EF72003768CF /* BasisGrotesquePro-Regular.ttf in Resources */,
 				CDC4900525093E3300D3FC39 /* GothicA1-Black.ttf in Resources */,
 				9D7360F0236513DE00DC6ACB /* Preview Assets.xcassets in Resources */,
 				9D328D0F2365EF72003768CF /* BasisGrotesquePro-Bold.ttf in Resources */,
+				9D290914251049FF00534D1B /* lll.mp4 in Resources */,
 				9DF8F01224875E65003AE42D /* Summer1.dng in Resources */,
 				CDC48FE725093DF800D3FC39 /* GoogleService-Info.plist in Resources */,
+				9D29091D2510699A00534D1B /* myv3.mp4 in Resources */,
 				CDC48FF925093E3300D3FC39 /* GothicA1-SemiBold.ttf in Resources */,
 				9D7360ED236513DE00DC6ACB /* Assets.xcassets in Resources */,
 				9D328D102365EF72003768CF /* BasisGrotesquePro-Light.ttf in Resources */,
@@ -473,12 +497,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				CDC4900C25093E3400D3FC39 /* GothicA1-ExtraBold.ttf in Resources */,
+				9D29091125103B4F00534D1B /* fad1.mp4 in Resources */,
 				CDC4900625093E3300D3FC39 /* GothicA1-Black.ttf in Resources */,
 				CDC48FF425093E3300D3FC39 /* GothicA1-ExtraLight.ttf in Resources */,
+				9D29091E2510699A00534D1B /* myv3.mp4 in Resources */,
 				CDC4900325093E3300D3FC39 /* GothicA1-Light.ttf in Resources */,
 				CDC4900025093E3300D3FC39 /* GothicA1-Thin.ttf in Resources */,
+				9D290915251049FF00534D1B /* lll.mp4 in Resources */,
 				CDC48FFA25093E3300D3FC39 /* GothicA1-SemiBold.ttf in Resources */,
 				CDC4900925093E3300D3FC39 /* GothicA1-Regular.ttf in Resources */,
+				9D29091A2510695C00534D1B /* ad3.mp4 in Resources */,
 				CDC48FE825093DF800D3FC39 /* GoogleService-Info.plist in Resources */,
 				CDC48FF725093E3300D3FC39 /* GothicA1-Medium.ttf in Resources */,
 				CDC48FFD25093E3300D3FC39 /* GothicA1-Bold.ttf in Resources */,
@@ -490,12 +518,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				CDC4900D25093E3400D3FC39 /* GothicA1-ExtraBold.ttf in Resources */,
+				9D29091225103B4F00534D1B /* fad1.mp4 in Resources */,
 				CDC4900725093E3300D3FC39 /* GothicA1-Black.ttf in Resources */,
 				CDC48FF525093E3300D3FC39 /* GothicA1-ExtraLight.ttf in Resources */,
+				9D29091F2510699A00534D1B /* myv3.mp4 in Resources */,
 				CDC4900425093E3300D3FC39 /* GothicA1-Light.ttf in Resources */,
 				CDC4900125093E3300D3FC39 /* GothicA1-Thin.ttf in Resources */,
+				9D290916251049FF00534D1B /* lll.mp4 in Resources */,
 				CDC48FFB25093E3300D3FC39 /* GothicA1-SemiBold.ttf in Resources */,
 				CDC4900A25093E3400D3FC39 /* GothicA1-Regular.ttf in Resources */,
+				9D29091B2510695C00534D1B /* ad3.mp4 in Resources */,
 				CDC48FE925093DF800D3FC39 /* GoogleService-Info.plist in Resources */,
 				CDC48FF825093E3300D3FC39 /* GothicA1-Medium.ttf in Resources */,
 				CDC48FFE25093E3300D3FC39 /* GothicA1-Bold.ttf in Resources */,
@@ -823,7 +855,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1.2;
+				MARKETING_VERSION = 3.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aatech.mypresets3;
 				PRODUCT_NAME = PresetPack;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -849,7 +881,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1.2;
+				MARKETING_VERSION = 3.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aatech.mypresets3;
 				PRODUCT_NAME = PresetPack;
 				PROVISIONING_PROFILE_SPECIFIER = "";

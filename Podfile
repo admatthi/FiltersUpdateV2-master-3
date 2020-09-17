@@ -21,6 +21,9 @@ pod 'Alamofire'
 pod 'AlamofireImage'
 pod 'Firebase/Crashlytics'
 pod 'Firebase/Analytics'
+pod 'Pulse'
+pod 'Pulsator'
+
 
 
   target 'CleanseTests' do

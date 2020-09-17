@@ -101,20 +101,20 @@ queryforpaywall{ () -> Void in
   
     slimeybool = true
     
-    self.queryforinfo()
-    
-    
-    
-    
-    let storybaord = UIStoryboard(name: "Main", bundle: Bundle.main)
-    let authVC = storybaord.instantiateViewController(withIdentifier: "Onboarding")
+//    self.queryforinfo()
+//
+//    
+//
+//
+//    let storybaord = UIStoryboard(name: "Main", bundle: Bundle.main)
+//    let authVC = storybaord.instantiateViewController(withIdentifier: "Onboarding")
     onboarding = true
     
-    self.window?.rootViewController? = authVC
-    
-    self.window?.makeKeyAndVisible()
-    
-    UserDefaults.standard.set(true, forKey: "launchedBefore")
+//    self.window?.rootViewController? = authVC
+//
+//    self.window?.makeKeyAndVisible()
+//
+//    UserDefaults.standard.set(true, forKey: "launchedBefore")
     
     
     

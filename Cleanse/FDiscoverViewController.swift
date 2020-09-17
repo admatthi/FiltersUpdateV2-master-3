@@ -411,6 +411,8 @@ class FDiscoverViewController: UIViewController, UICollectionViewDelegate, UICol
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         
+        
+        
         titleCollectionView!.collectionViewLayout = layout
         
         queryforids { () -> Void in

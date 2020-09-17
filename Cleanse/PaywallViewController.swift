@@ -12,6 +12,11 @@ import Purchases
 import FBSDKCoreKit
 import MBProgressHUD
 import AppsFlyerLib
+import Pulsator
+import AVKit
+import AVFoundation
+import Kingfisher
+import FirebaseDatabase
 
 var refer = String()
 
@@ -23,10 +28,63 @@ var refer = String()
 }
 
 
-class PaywallViewController: UIViewController {
-
-var delegate : SwiftPaywallDelegate?
-
+class PaywallViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let book = self.book(atIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Books", for: indexPath) as! TitleCollectionViewCell
+        
+        let name = book?.name
+        
+        
+        
+        cell.titlelabel.text = name
+        
+        if let imageURLString = book?.imageURL, let imageUrl = URL(string: imageURLString) {
+            
+            let image = UIImage(named: "Artboard-1")
+            cell.titleImage.kf.setImage(with: imageUrl, placeholder: image)
+            //                cell.titleImage.kf.setImage(withURL: imageUrl)
+            
+            MBProgressHUD.hide(for: view, animated: true)
+            //                titleCollectionView.alpha = 1
+            
+            
+            
+            
+        } else {
+            
+            cell.titleImage.image = UIImage(named: "Artboard-1")
+        }
+        
+        cell.layer.cornerRadius = 10.0
+        cell.layer.masksToBounds = true
+        
+        return cell
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        
+        return books.count
+        
+    }
+    
+    
+    var books: [Book] = [] {
+        didSet {
+            
+//            titleCollectionView.alpha = 1
+            
+//            self.titleCollectionView.reloadData()
+            
+            
+        }
+    }
+    
+    var delegate : SwiftPaywallDelegate?
+    
     private var offering : Purchases.Offering?
     
     private var offeringId : String?
@@ -35,14 +93,58 @@ var delegate : SwiftPaywallDelegate?
     @IBOutlet weak var disclaimertext: UIButton!
     var purchases = Purchases.configure(withAPIKey: "ryfdDUwKGrQKWbGaaYJjIobqbOruFudh", appUserID: nil)
     
+    func configAutoscrollTimer()
+    {
+        
+        timr=Timer.scheduledTimer(timeInterval: 0.005, target: self, selector: #selector(PaywallViewController.autoScrollView), userInfo: nil, repeats: true)
+    }
+    func deconfigAutoscrollTimer()
+    {
+        timr.invalidate()
+        
+    }
+    func onTimer()
+    {
+        autoScrollView()
+    }
+    
+    var timr=Timer()
+    var w:CGFloat=0.0
+    
+    @objc func autoScrollView()
+    {
+        
+        let initailPoint = CGPoint(x: w,y :0)
+        
+        if __CGPointEqualToPoint(initailPoint, titleCollectionView.contentOffset)
+        {
+            if w<titleCollectionView.contentSize.width
+            {
+                w += 0.5
+            }
+            else
+            {
+                w = -self.view.frame.size.width
+            }
+            
+            let offsetPoint = CGPoint(x: w,y :0)
+            
+            titleCollectionView.contentOffset=offsetPoint
+            
+        }
+        else
+        {
+            w=titleCollectionView.contentOffset.x
+        }
+    }
     
     @IBAction func tapRestore(_ sender: Any) {
         
         
-
-          ref?.child("Users").child(uid).updateChildValues(["Purchased" : "True"])
-          
-          didpurchase = true
+        
+        ref?.child("Users").child(uid).updateChildValues(["Purchased" : "True"])
+        
+        didpurchase = true
         
         
         Purchases.shared.restoreTransactions { (purchaserInfo, error) in
@@ -58,135 +160,135 @@ var delegate : SwiftPaywallDelegate?
                 ref?.child("Users").child(uid).updateChildValues(["Purchased" : "True"])
                 
                 didpurchase = true
-              
-                         
-                         self.dismiss(animated: true, completion: nil)
-
-                     
+                
+                
+                self.dismiss(animated: true, completion: nil)
+                
+                
             }
             
         }
     }
     @IBAction func tapBack(_ sender: Any) {
         
-  
+        
         referrer = "Paywall"
         
         if onboarding {
             
-            self.performSegue(withIdentifier: "PaywallToHome", sender: self)
+            self.performSegue(withIdentifier: "PaywallToHome2", sender: self)
             
         } else {
             
             self.dismiss(animated: true, completion: nil)
-
-        }
             
-
+        }
+        
+        
         
         
     }
-
-  
+    
+    
     func logNotificationsSettingsTrue(referrer : String) {
-                                     AppEvents.logEvent(AppEvents.Name(rawValue: "notifications enabled"), parameters: ["value" : "true"])
-                                 }
-
-  
+        AppEvents.logEvent(AppEvents.Name(rawValue: "notifications enabled"), parameters: ["value" : "true"])
+    }
+    
+    
     func logNotificationsSettingsFalse(referrer : String) {
-                                     AppEvents.logEvent(AppEvents.Name(rawValue: "notifications enabled"), parameters: ["value" : "false"])
-                                 }
-
-
+        AppEvents.logEvent(AppEvents.Name(rawValue: "notifications enabled"), parameters: ["value" : "false"])
+    }
+    
+    
     @IBOutlet weak var backimage: UIImageView!
     
+    @IBOutlet weak var titleCollectionView: UICollectionView!
     
     @IBAction func tapContinue(_ sender: Any) {
-        
         
         logTapSubscribeEvent(referrer : referrer)
         
         AppsFlyerTracker.shared().trackEvent(AFEventInitiatedCheckout, withValues: [
-              AFEventParamContentId: referrer,
+            AFEventParamContentId: referrer,
             
-          ]);
-
+        ]);
+        
         
         let loadingNotification = MBProgressHUD.showAdded(to: view, animated: true)
-
+        
         
         guard let package = offering?.availablePackages[0] else {
-              print("No available package")
+            print("No available package")
             MBProgressHUD.hide(for: view, animated: true)
-
-              return
-          }
+            
+            return
+        }
         
         
         Purchases.shared.purchasePackage(package) { (trans, info, error, cancelled) in
-                  
+            
             MBProgressHUD.hide(for: self.view, animated: true)
-
-                  if let error = error {
+            
+            if let error = error {
+                
+                MBProgressHUD.hide(for: self.view, animated: true)
+                
+                if let purchaseFailedHandler = self.delegate?.purchaseFailed {
+                    purchaseFailedHandler(self, info, error, cancelled)
+                } else {
+                    if !cancelled {
+                        
+                    }
+                }
+            } else  {
+                if let purchaseCompletedHandler = self.delegate?.purchaseCompleted {
+                    purchaseCompletedHandler(self, trans!, info!)
+                    
+                    self.logPurchaseSuccessEvent(referrer : referrer)
+                    //
+                    ref?.child("Users").child(uid).updateChildValues(["Purchased" : "True"])
+                    
+                    didpurchase = true
+                    
+                    
+                    AppsFlyerTracker.shared().trackEvent(AFEventStartTrial, withValues: [
+                        AFEventParamContentId: referrer,
+                        
+                    ]);
                     
                     MBProgressHUD.hide(for: self.view, animated: true)
-
-                      if let purchaseFailedHandler = self.delegate?.purchaseFailed {
-                          purchaseFailedHandler(self, info, error, cancelled)
-                      } else {
-                          if !cancelled {
-                            
-                          }
-                      }
-                  } else  {
-                      if let purchaseCompletedHandler = self.delegate?.purchaseCompleted {
-                          purchaseCompletedHandler(self, trans!, info!)
-                          
-                          self.logPurchaseSuccessEvent(referrer : referrer)
-                          //
-                          ref?.child("Users").child(uid).updateChildValues(["Purchased" : "True"])
-                          
-                          didpurchase = true
+                    
+                    
+                    referrer = "Paywall"
+                    
+                    self.dismiss(animated: true, completion: nil)
+                    
+                    
+                    
+                } else {
+                    
+                    self.logPurchaseSuccessEvent(referrer : referrer)
+                    //
+                    ref?.child("Users").child(uid).updateChildValues(["Purchased" : "True"])
+                    
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                    
+                    
+                    AppsFlyerTracker.shared().trackEvent(AFEventStartTrial, withValues: [
+                        AFEventParamContentId: referrer,
                         
-                        
-                              AppsFlyerTracker.shared().trackEvent(AFEventStartTrial, withValues: [
-                                    AFEventParamContentId: referrer,
-                                  
-                                ]);
-                        
-                        MBProgressHUD.hide(for: self.view, animated: true)
-
-                        
-                        referrer = "Paywall"
-
-                                   self.dismiss(animated: true, completion: nil)
-
-                               
-                          
-                      } else {
-                          
-                          self.logPurchaseSuccessEvent(referrer : referrer)
-                          //
-                          ref?.child("Users").child(uid).updateChildValues(["Purchased" : "True"])
-                          
-                        MBProgressHUD.hide(for: self.view, animated: true)
-
-
-                        AppsFlyerTracker.shared().trackEvent(AFEventStartTrial, withValues: [
-                              AFEventParamContentId: referrer,
-                            
-                          ]);
-                          didpurchase = true
-                        
-                                   referrer = "Paywall"
-
-                                   self.dismiss(animated: true, completion: nil)
-
-                               
-                          
-                      }
-                  }
-              }
+                    ]);
+                    didpurchase = true
+                    
+                    referrer = "Paywall"
+                    
+                    self.dismiss(animated: true, completion: nil)
+                    
+                    
+                    
+                }
+            }
+        }
     }
     
     @IBAction func tapTerms(_ sender: Any) {
@@ -200,109 +302,221 @@ var delegate : SwiftPaywallDelegate?
     
     @IBOutlet weak var leadingtext: UILabel!
     
-@IBOutlet weak var headlinelabel: UILabel!
-@IBOutlet weak var tapcontinue: UIButton!
+    @IBOutlet weak var myimage: UIImageView!
+    @IBOutlet weak var videoview: UIView!
+    @IBOutlet weak var headlinelabel: UILabel!
+    @IBOutlet weak var tapcontinue: UIButton!
+    var playerLayer = AVPlayerLayer()
+    
+    func playVideo(from file:String) {
+        let file = file.components(separatedBy: ".")
+        
+        guard let path = Bundle.main.path(forResource: file[0], ofType:file[1]) else {
+            debugPrint( "\(file.joined(separator: ".")) not found")
+            return
+        }
+        let player = AVPlayer(url: URL(fileURLWithPath: path))
+        
+        playerLayer = AVPlayerLayer(player: player)
+        playerLayer.frame = self.view.bounds
+        playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        
+        self.myimage.layer.addSublayer(playerLayer)
+        
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { [weak self] _ in
+            player.seek(to: CMTime.zero)
+            player.play()
+        }
+        //        self.view.sendSubviewToBack(playerLayer)
+        
+        player.play()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+//        configAutoscrollTimer()
+        
+    }
+    
+//    override func viewDidDisappear(_ animated: Bool) {
+//        super.viewDidAppear(true)
+//
+//        deconfigAutoscrollTimer()
+//    }
+//
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         ref = Database.database().reference()
         
-//        tapcontinue.layer.cornerRadius = 25.0
-//
-//        tapcontinue.clipsToBounds = true
+        selectedgenre = "New"
+        
+        //               playVideo(from: "myv3.mp4")
+        
+        
+        
+        //
+        //           let pulsator = Pulsator()
+        //            pulsator.radius = 240.0
+        //
+        //        pulsator.numPulse = 30
+        //
+        //        pulsator.backgroundColor = UIColor.red.cgColor
+        //
+        //           view.layer.addSublayer(pulsator)
+        //           pulsator.start()
+        
+        //        tapcontinue.layer.cornerRadius = 25.0
+        //
+        //        tapcontinue.clipsToBounds = true
+        
         
         logPaywallShownEvent(referrer : referrer)
         
-                                      let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
-                                         let blurEffectView = UIVisualEffectView(effect: blurEffect)
-                                         blurEffectView.frame = backimage.bounds
-                                         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
-                                      backimage.addSubview(blurEffectView)
+//        var screenSize = titleCollectionView.bounds
+//        var screenWidth = screenSize.width
+//        var screenHeight = screenSize.height
+//
+//        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+//        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+//        layout.itemSize = CGSize(width: screenWidth/1.1, height: screenWidth/1.1)
+//        layout.minimumInteritemSpacing = 0
+//        layout.minimumLineSpacing = 0
+//
+//        layout.scrollDirection = .horizontal
+//        titleCollectionView!.collectionViewLayout = layout
+//
         
-            if slimeybool {
-
-        //                slimeybool = true
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = backimage.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        backimage.addSubview(blurEffectView)
         //
-
+        if slimeybool {
+            
+            //                slimeybool = true
+            //
+            
                         self.toptext.text = "3 Day FREE Trial"
-                        self.termstext.alpha = 0
-                                self.disclaimertext.alpha = 0
-                                 self.tapcontinue.setTitle("Try for FREE!", for: .normal)
-                        
-                    } else {
-        //
-        //                slimeybool = false
-                        self.leadingtext.text = "$69.99/year"
-                        
+            self.termstext.alpha = 0
+            self.disclaimertext.alpha = 0
+            self.tapcontinue.setTitle("Try for FREE!", for: .normal)
+            
+        } else {
+            //
+            //                slimeybool = false
+            self.leadingtext.text = "139.99/year. Cancel anytime within 3 days and you won't be charged anything."
+            
                         self.toptext.text = "World Class Presets"
-        //
-                        self.termstext.alpha = 1
-                          self.disclaimertext.alpha = 1
-                          self.tapcontinue.setTitle("Continue", for: .normal)
-                        self.tapcontinue.setTitle("Continue", for: .normal)
-                        
-
-                    }
+            //
+            self.termstext.alpha = 1
+            self.disclaimertext.alpha = 1
+            self.tapcontinue.setTitle("Continue", for: .normal)
+            self.tapcontinue.setTitle("Continue", for: .normal)
+            
+            
+        }
+        
+        queryforids { () -> Void in
+            
+        }
         
         queryforpaywall()
         
         Purchases.shared.offerings { (offerings, error) in
-               
-               if error != nil {
-               }
-               if let offeringId = self.offeringId {
-                   
-                   self.offering = offerings?.offering(identifier: offeringId)
-               } else {
-                   self.offering = offerings?.current
-               }
-               
-           }
+            
+            if error != nil {
+            }
+            if let offeringId = self.offeringId {
+                
+                self.offering = offerings?.offering(identifier: offeringId)
+            } else {
+                self.offering = offerings?.current
+            }
+            
+        }
         
- 
+        
         // Do any additional setup after loading the view.
+    }
+    
+    func queryforids(completed: @escaping (() -> Void) ) {
+        
+//        titleCollectionView.alpha = 0
+        
+        var functioncounter = 0
+        
+        
+        ref?.child("fb-ads-filter").child(selectedgenre).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            var value = snapshot.value as? NSDictionary
+            
+            print (value)
+            
+            if let snapDict = snapshot.value as? [String: AnyObject] {
+                
+                let genre = Genre(withJSON: snapDict)
+                
+                if let newbooks = genre.books {
+                    
+                    self.books = newbooks
+                    
+                    self.books = self.books.sorted(by: { $0.popularity ?? 0  > $1.popularity ?? 0 })
+                    
+                }
+                
+            }
+            
+        })
     }
     @IBOutlet weak var toptext: UILabel!
     
     @IBOutlet weak var value1: UILabel!
     func queryforpaywall() {
-                
+        
         ref?.child("Users").observeSingleEvent(of: .value, with: { (snapshot) in
             
             let value = snapshot.value as? NSDictionary
             
-     
+            
             
             if let slimey = value?["Slimey"] as? String {
-
+                
                 slimeybool = true
-//
-                self.leadingtext.text = slimey
-
-                self.toptext.text = "3 Day FREE Trial"
+                //
+                self.leadingtext.alpha = 0
+                
+                self.toptext.alpha = 1
                 self.termstext.alpha = 0
-                        self.disclaimertext.alpha = 0
-                         self.tapcontinue.setTitle("Try for FREE!", for: .normal)
+                self.disclaimertext.alpha = 0
+                self.tapcontinue.setTitle("Try for FREE!", for: .normal)
+                self.toptext.text = slimey
                 
             } else {
-//
-                slimeybool = false
-                self.leadingtext.text = "$69.99/year"
                 
-                self.toptext.text = "World Class Presets"
-//
+                self.leadingtext.alpha = 1
+                //
+                slimeybool = false
+                
+                self.leadingtext.text = "$39.99/year"
+                
+                
+                self.toptext.alpha = 0
                 self.termstext.alpha = 1
-                  self.disclaimertext.alpha = 1
-                  self.tapcontinue.setTitle("Continue", for: .normal)
-                self.tapcontinue.setTitle("Continue", for: .normal)
-//
-
+                self.disclaimertext.alpha = 1
+                self.tapcontinue.setTitle("Start Subscription", for: .normal)
+                //
+                
             }
             
             if let discountcode = value?["DiscountCode"] as? String {
                 
-               actualdiscount = discountcode
+                actualdiscount = discountcode
                 
             } else {
                 
@@ -336,3 +550,18 @@ var delegate : SwiftPaywallDelegate?
     }
     
 }
+
+extension PaywallViewController {
+     func book(atIndex index: Int) -> Book? {
+         if index > books.count - 1 {
+             return nil
+         }
+
+         return books[index]
+     }
+
+     func book(atIndexPath indexPath: IndexPath) -> Book? {
+         return self.book(atIndex: indexPath.row)
+     }
+ }
+

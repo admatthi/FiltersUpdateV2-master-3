@@ -23,6 +23,7 @@ class TitleCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var titleImage: UIImageView!
     @IBOutlet weak var titlelabel: UILabel!
     
+    @IBOutlet weak var lockimage: UIImageView!
     var tapped = true
     @IBOutlet weak var leadinglabel: UILabel!
     

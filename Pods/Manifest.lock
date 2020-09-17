@@ -128,6 +128,8 @@ PODS:
   - nanopb/encode (1.30905.0)
   - PromisesObjC (1.2.8)
   - Protobuf (3.11.4)
+  - Pulsator (0.6.0)
+  - Pulse (1.0.1)
   - Purchases (3.3.1)
 
 DEPENDENCIES:
@@ -142,6 +144,8 @@ DEPENDENCIES:
   - Firebase/Storage
   - Kingfisher
   - MBProgressHUD
+  - Pulsator
+  - Pulse
   - Purchases
 
 SPEC REPOS:
@@ -174,6 +178,8 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - Protobuf
+    - Pulsator
+    - Pulse
     - Purchases
 
 SPEC CHECKSUMS:
@@ -205,8 +211,10 @@ SPEC CHECKSUMS:
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   Protobuf: 176220c526ad8bd09ab1fb40a978eac3fef665f7
+  Pulsator: eb5a9f9be4bdcbd19903984c65deca6aabe50a17
+  Pulse: 7819903cbbbd8c8ebd46bc0286c43581570d9aec
   Purchases: 15bb10a16e825ea724aeab107d98036fa168a670
 
-PODFILE CHECKSUM: 4f030c0ae2e972a879da4782ad6472cf4cc06cdc
+PODFILE CHECKSUM: 202083713276a5595c03e29bfd98620e13c46ae7
 
 COCOAPODS: 1.9.3
