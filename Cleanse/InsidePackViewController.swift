@@ -260,7 +260,6 @@ class InsidePackViewController: UIViewController, UICollectionViewDelegate, UICo
         
         //print("CELL ITEM===>", book ?? [])
         
-        let loadingNotification = MBProgressHUD.showAdded(to: view, animated: true)
         
         
         headlines.removeAll()
@@ -297,7 +296,8 @@ class InsidePackViewController: UIViewController, UICollectionViewDelegate, UICo
         
         
         if didpurchase {
-            
+            let loadingNotification = MBProgressHUD.showAdded(to: view, animated: true)
+
             
             var path = String()
             //
@@ -351,14 +351,14 @@ class InsidePackViewController: UIViewController, UICollectionViewDelegate, UICo
             
         }
         
-        if indexPath.row == 0 {
+//        if indexPath.row == 0 {
             
             cell.leadinglabel.alpha = 1
             
-        } else {
-            cell.leadinglabel.alpha = 0
-            
-        }
+//        } else {
+//            cell.leadinglabel.alpha = 0
+//            
+//        }
         
         cell.beforeimge.alpha = 0
         
