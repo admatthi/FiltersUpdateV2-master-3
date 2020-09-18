@@ -204,8 +204,98 @@ class PaywallViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     @IBOutlet weak var titleCollectionView: UICollectionView!
     
+    @IBAction func tapWeekly(_ sender: Any) {
+        
+        
+    
+        logTapSubscribeEvent(referrer : referrer)
+        
+        AppsFlyerTracker.shared().trackEvent(AFEventInitiatedCheckout, withValues: [
+            AFEventParamContentId: referrer,
+            
+        ]);
+        
+        
+        let loadingNotification = MBProgressHUD.showAdded(to: view, animated: true)
+        
+        
+        guard let package = offering?.availablePackages[1] else {
+            print("No available package")
+            MBProgressHUD.hide(for: view, animated: true)
+            
+            return
+        }
+        
+        
+        Purchases.shared.purchasePackage(package) { (trans, info, error, cancelled) in
+            
+            MBProgressHUD.hide(for: self.view, animated: true)
+            
+            if let error = error {
+                
+                MBProgressHUD.hide(for: self.view, animated: true)
+                
+                if let purchaseFailedHandler = self.delegate?.purchaseFailed {
+                    purchaseFailedHandler(self, info, error, cancelled)
+                } else {
+                    if !cancelled {
+                        
+                    }
+                }
+            } else  {
+                if let purchaseCompletedHandler = self.delegate?.purchaseCompleted {
+                    purchaseCompletedHandler(self, trans!, info!)
+                    
+                    self.logPurchaseSuccessEvent(referrer : referrer)
+                    //
+                    ref?.child("Users").child(uid).updateChildValues(["Purchased" : "True"])
+                    
+                    didpurchase = true
+                    
+                    
+                    AppsFlyerTracker.shared().trackEvent(AFEventStartTrial, withValues: [
+                        AFEventParamContentId: referrer,
+                        
+                    ]);
+                    
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                    
+                    
+                    referrer = "Paywall"
+                    
+                    self.dismiss(animated: true, completion: nil)
+                    
+                    
+                    
+                } else {
+                    
+                    self.logPurchaseSuccessEvent(referrer : referrer)
+                    //
+                    ref?.child("Users").child(uid).updateChildValues(["Purchased" : "True"])
+                    
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                    
+                    
+                    AppsFlyerTracker.shared().trackEvent(AFEventStartTrial, withValues: [
+                        AFEventParamContentId: referrer,
+                        
+                    ]);
+                    didpurchase = true
+                    
+                    referrer = "Paywall"
+                    
+                    self.dismiss(animated: true, completion: nil)
+                    
+                    
+                    
+                }
+            }
+        }
+        
+    }
     @IBAction func tapContinue(_ sender: Any) {
         
+  
         logTapSubscribeEvent(referrer : referrer)
         
         AppsFlyerTracker.shared().trackEvent(AFEventInitiatedCheckout, withValues: [
@@ -349,9 +439,27 @@ class PaywallViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tapcontinue2.layer.borderWidth  = 3.0
+        tapcontinue2.layer.borderColor  = UIColor.lightGray.cgColor
+        
         ref = Database.database().reference()
+   
         
         selectedgenre = "New"
+        
+        Purchases.shared.offerings { (offerings, error) in
+                         
+                         if error != nil {
+                         }
+                         if let offeringId = self.offeringId {
+                             
+                             self.offering = offerings?.offering(identifier: "weekly")
+                         } else {
+                             self.offering = offerings?.current
+                         }
+                         
+                     }
+            
         
         //               playVideo(from: "myv3.mp4")
         
@@ -390,12 +498,12 @@ class PaywallViewController: UIViewController, UICollectionViewDelegate, UIColle
 //
         
         
-        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = backimage.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        backimage.addSubview(blurEffectView)
+//        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+//        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+//        blurEffectView.frame = backimage.bounds
+//        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//
+//        backimage.addSubview(blurEffectView)
         //
         if slimeybool {
             
@@ -405,12 +513,17 @@ class PaywallViewController: UIViewController, UICollectionViewDelegate, UIColle
                         self.toptext.text = "3 Day FREE Trial"
             self.termstext.alpha = 0
             self.disclaimertext.alpha = 0
-            self.tapcontinue.setTitle("Try for FREE!", for: .normal)
+            self.tapcontinue.setTitle("Try for FREE", for: .normal)
+            
+            
+               pricingone.alpha = 1
+               pricingtwo.alpha = 1
+               pricingthree.alpha = 1
             
         } else {
             //
             //                slimeybool = false
-            self.leadingtext.text = "139.99/year. Cancel anytime within 3 days and you won't be charged anything."
+//            self.leadingtext.text = "139.99/year. Cancel anytime within 3 days and you won't be charged anything."
             
                         self.toptext.text = "World Class Presets"
             //
@@ -419,6 +532,9 @@ class PaywallViewController: UIViewController, UICollectionViewDelegate, UIColle
             self.tapcontinue.setTitle("Continue", for: .normal)
             self.tapcontinue.setTitle("Continue", for: .normal)
             
+               pricingone.alpha = 0
+               pricingtwo.alpha = 0
+               pricingthree.alpha = 0
             
         }
         
@@ -428,18 +544,7 @@ class PaywallViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         queryforpaywall()
         
-        Purchases.shared.offerings { (offerings, error) in
-            
-            if error != nil {
-            }
-            if let offeringId = self.offeringId {
-                
-                self.offering = offerings?.offering(identifier: offeringId)
-            } else {
-                self.offering = offerings?.current
-            }
-            
-        }
+     
         
         
         // Do any additional setup after loading the view.
@@ -474,8 +579,11 @@ class PaywallViewController: UIViewController, UICollectionViewDelegate, UIColle
             
         })
     }
+    @IBOutlet weak var tapcontinue2: UIButton!
     @IBOutlet weak var toptext: UILabel!
-    
+    @IBOutlet weak var pricingone: UILabel!
+    @IBOutlet weak var pricingthree: UILabel!
+    @IBOutlet weak var pricingtwo: UILabel!
     @IBOutlet weak var value1: UILabel!
     func queryforpaywall() {
         
@@ -489,27 +597,34 @@ class PaywallViewController: UIViewController, UICollectionViewDelegate, UIColle
                 
                 slimeybool = true
                 //
-                self.leadingtext.alpha = 0
                 
                 self.toptext.alpha = 1
                 self.termstext.alpha = 0
                 self.disclaimertext.alpha = 0
                 self.tapcontinue.setTitle("Try for FREE!", for: .normal)
                 self.toptext.text = slimey
+                self.tapcontinue2.setTitle("Subscribe", for: .normal)
+
+                
+                self.pricingone.alpha = 1
+                   self.pricingtwo.alpha = 1
+                   self.pricingthree.alpha = 1
                 
             } else {
-                
-                self.leadingtext.alpha = 1
-                //
+                                //
                 slimeybool = false
-                
-                self.leadingtext.text = "$39.99/year"
-                
-                
+                                
+                self.tapcontinue2.setTitle("$9.99/week", for: .normal)
+
                 self.toptext.alpha = 0
                 self.termstext.alpha = 1
                 self.disclaimertext.alpha = 1
-                self.tapcontinue.setTitle("Start Subscription", for: .normal)
+                self.tapcontinue.setTitle("$69.99/year", for: .normal)
+                
+                
+                   self.pricingone.alpha = 0
+                  self.pricingtwo.alpha = 0
+                   self.pricingthree.alpha = 0
                 //
                 
             }
