@@ -153,7 +153,7 @@
 		9D54D5242509B89700F0A2AA /* OnboardingAViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingAViewController.swift; path = "../../FiltersUpdateV2-master/Cleanse/OnboardingAViewController.swift"; sourceTree = "<group>"; };
 		9D54D5252509B89700F0A2AA /* OnboardingCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingCViewController.swift; path = "../../FiltersUpdateV2-master/Cleanse/OnboardingCViewController.swift"; sourceTree = "<group>"; };
 		9D54D5262509B89700F0A2AA /* OnboardingBViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingBViewController.swift; path = "../../FiltersUpdateV2-master/Cleanse/OnboardingBViewController.swift"; sourceTree = "<group>"; };
-		9D7360E3236513DC00DC6ACB /* PresetPack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PresetPack.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D7360E3236513DC00DC6ACB /* FLTRS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FLTRS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D7360E6236513DC00DC6ACB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D7360EC236513DE00DC6ACB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9D7360EF236513DE00DC6ACB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -251,7 +251,7 @@
 		9D7360E4236513DC00DC6ACB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9D7360E3236513DC00DC6ACB /* PresetPack.app */,
+				9D7360E3236513DC00DC6ACB /* FLTRS.app */,
 				9D7360F9236513DE00DC6ACB /* CleanseTests.xctest */,
 				9D736104236513DE00DC6ACB /* CleanseUITests.xctest */,
 			);
@@ -378,7 +378,7 @@
 			);
 			name = Cleanse;
 			productName = Cleanse;
-			productReference = 9D7360E3236513DC00DC6ACB /* PresetPack.app */;
+			productReference = 9D7360E3236513DC00DC6ACB /* FLTRS.app */;
 			productType = "com.apple.product-type.application";
 		};
 		9D7360F8236513DE00DC6ACB /* CleanseTests */ = {
@@ -855,9 +855,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.4.1;
+				MARKETING_VERSION = 3.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aatech.mypresets3;
-				PRODUCT_NAME = PresetPack;
+				PRODUCT_NAME = FLTRS;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -881,9 +881,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.4.1;
+				MARKETING_VERSION = 3.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aatech.mypresets3;
-				PRODUCT_NAME = PresetPack;
+				PRODUCT_NAME = FLTRS;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
