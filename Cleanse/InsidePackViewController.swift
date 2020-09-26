@@ -419,13 +419,13 @@ class InsidePackViewController: UIViewController, UICollectionViewDelegate, UICo
             
         } else {
             
-            //                        var randomInt = Int.random(in:100..<900)
+//                                    var randomInt = Int.random(in:100..<900)
             //
             //
-            //                        ref?.child("fb-ads-filter").child(selectedgenre).child(book!.bookID).updateChildValues(["Views" : "\(randomInt)k"])
+//                                    ref?.child("fb-ads-filter").child(selectedgenre).child(book!.bookID).updateChildValues(["Views" : "\(randomInt)k"])
             
             
-            cell.viewslabel.text = "1.3M"
+//            cell.viewslabel.text = "1.3M"
             
         }
         
